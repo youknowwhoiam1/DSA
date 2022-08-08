@@ -1,25 +1,20 @@
 class Solution {
 public:
+    int f(vector<int>& a, int i, int t, int n, vector<vector<int>>&dp){
+        if(i == n or t == 4){return 0;}
+        if(dp[i][t] != -1){return dp[i][t];}
+        if(t % 2 == 0){
+            return dp[i][t] = max(-a[i]+f(a,i+1,t+1,n,dp),
+                                 f(a,i+1,t,n,dp));
+        }else{
+            return dp[i][t] = max(a[i] + f(a,i+1,t+1,n,dp),
+                          f(a,i+1,t,n,dp));
+        }
+    }
+    
     int maxProfit(vector<int>& a) {
         int n = a.size();
-        
-        vector<vector<int>> after(2, vector<int>(3));
-        vector<vector<int>> curr(2, vector<int>(3));
-        
-        for(int i = n-1; i >= 0; i--){
-            for(int b = 0; b <= 1; b++){
-                for(int c = 1; c <= 2; c++){
-                    if(b == 1){
-                        curr[b][c] = max(-a[i]+after[0][c],
-                                        0+after[1][c]);
-                    }else{
-                        curr[b][c] = max(a[i]+after[1][c-1],
-                                        0+after[0][c]);
-                    }
-                }
-            }
-            after = curr;
-        }
-        return after[1][2];
+        vector<vector<int>> dp(n, vector<int>(4,-1));
+        return f(a, 0, 0, n, dp);
     }
 };
