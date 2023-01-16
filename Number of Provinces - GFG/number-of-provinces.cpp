@@ -34,14 +34,6 @@ class Solution {
             }
         }
         
-        // for(int i = 0; i < edge.size(); i++){
-        //     cout << i << " ";
-        //     for(int j = 0; j < edge[i].size(); j++){
-        //         cout << edge[i][j] << " ";
-        //     }
-        //     cout << endl;
-        // }
-        
         int ans = 0;
         for(int i = 0; i < V; i++){
             if(!vis[i]) {
