@@ -36,10 +36,6 @@ class Solution {
                     vector<pair<int,int>> points;
                     f(0,0,i,j,n,m,g,vis,points);
                     sort(points.begin(), points.end());
-                    // for(int l = 0; l < points.size(); l++){
-                    //     cout << "{" << points[l].first << "," << points[l].second << "}" << " ,";
-                    // }
-                    // cout<<endl;
                     k[points]++;
                 }
             }
