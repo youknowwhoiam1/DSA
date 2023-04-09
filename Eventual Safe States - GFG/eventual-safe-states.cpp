@@ -10,42 +10,40 @@ using namespace std;
 
 class Solution {
   public:
-    
-    bool dfs(int v, vector<int>&vis, vector<int>adj[], vector<int>&vis1, vector<int>&safe){
-        vis[v] = 1;
-        vis1[v] = 1;
-        safe[v] = 0;
-        for(auto u : adj[v]){
-            if(!vis[u]){
-                if(dfs(u, vis, adj, vis1, safe) == true){
-                    safe[v] = 0;
-                    return true;
-                }
-            }else if(vis1[u]){
-                safe[v] = 0;
-                return true;
-            }
-        }
-        safe[v] = 1;
-        vis1[v] = 0;
-        return false;
-    }
-  
-    vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
+    vector<int> eventualSafeNodes(int N, vector<int> adj[]) {
         // code here
-        vector<int> vis(V), vis1(V), safe(V);
-        vector<int> ans;
-        for(int i = 0; i < V; i++){
-            if(vis[i] == 0){
-                dfs(i,vis,adj,vis1,safe);
+        vector<vector<int>> new_adj(N);
+        for(int i = 0; i < N; i++){
+            for(auto j : adj[i]){
+                new_adj[j].push_back(i);
             }
         }
-        for(int i = 0; i < V; i++){
-            if(safe[i] == 1){
-                ans.push_back(i);
+        vector<int> deg(N);
+	    for(int i = 0; i < N; i++){
+	        for(auto j : new_adj[i]){
+	            deg[j]++;
+	        }
+	    }
+	    queue<int> q;
+	    for(int i = 0; i < N; i++){
+	        if(deg[i] == 0){
+	            q.push(i);
+	        }
+	    }
+	    vector<int> topsort;
+	    while(!q.empty()){
+	        int v = q.front();
+	        q.pop();
+	        topsort.push_back(v);
+            for(auto u : new_adj[v]){
+                deg[u]--;
+                if(deg[u] == 0){
+                    q.push(u);
+                }
             }
-        }
-        return ans;
+	    }
+	    sort(topsort.begin(), topsort.end());
+	    return topsort;
     }
 };
 
