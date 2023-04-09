@@ -5,34 +5,41 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    // Function to detect cycle in a directed graph.
-    bool dfs(int v, vector<int>&vis, vector<int>adj[], vector<int>&vis1){
-        vis[v] = 1;
-        vis1[v] = 1;
-        for(auto u : adj[v]){
-            if(!vis[u]){
-                if(dfs(u, vis, adj, vis1) == true){
-                    return true;
-                }
-            }else if(vis1[u]){
-                return true;
-            }
-        }
-        vis1[v] = 0;
-        return false;
-    }
     
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-        vector<int> vis(V), vis1(V);
-        for(int i = 0; i < V; i++){
-            if(vis[i] == 0){
-                if(dfs(i,vis,adj,vis1) == true){
-                    return true;
+        vector<int> ideal;
+        for(int i = 0; i < V;i++){
+            ideal.push_back(i);
+        }
+        vector<int> deg(V);
+	    for(int i = 0; i < V; i++){
+	        for(auto j:adj[i]){
+	            deg[j]++;
+	        }
+	    }
+	    queue<int> q;
+	    for(int i = 0; i < V; i++){
+	        if(deg[i] == 0){
+	            q.push(i);
+	        }
+	    }
+	    vector<int> ans;
+	    while(!q.empty()){
+            int v = q.front();
+            q.pop();
+            ans.push_back(v);
+            for(auto u:adj[v]){
+                deg[u]--;
+                if(deg[u] == 0){
+                    q.push(u);
                 }
             }
-        }
-        return false;
+	    }
+	    sort(ans.begin(), ans.end());
+	   // for(int i = 0; i < ans.size(); i++){cout<<ans[i]<<" ";}cout<<endl;
+	    if(ans == ideal){return false;}
+	    return true;
     }
 };
 
