@@ -30,7 +30,8 @@ public:
             string s1 = s.substr(i + 1, n - i - 1);
             string s2 = s.substr(0, i + 1);
      
-            if (ispalindrome(s1.append(s2)))
+            string s3 = s1+s2;
+            if (ispalindrome(s3))
                 return true;
         }
         return false;	    
