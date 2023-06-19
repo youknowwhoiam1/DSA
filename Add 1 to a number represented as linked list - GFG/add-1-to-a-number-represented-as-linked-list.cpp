@@ -48,8 +48,8 @@ class Solution
     public:
     Node* addOne(Node *head) 
     {
-        // Your Code here
-        // return head of list after adding one
+        
+        // pushing digits into a vector
         vector<int> v;
         Node *temp = head;
         while(temp != NULL){
@@ -57,8 +57,11 @@ class Solution
             temp = temp->next;
         }
         
+        // reversing order of digits for adding
         reverse(v.begin(), v.end());
         
+        // updating the linked list
+        // effectively reversing the list
         temp = head;
         int i = 0;
         while(temp != NULL){
@@ -66,13 +69,8 @@ class Solution
             temp = temp->next;
         }
         
-        // temp = head;
-        // while(temp != NULL){
-        //     cout << temp->data << " ";
-        //     temp = temp->next;
-        // }
-        // cout << endl;
         
+        // performing addition
         int carry = 1;
         temp = head;
         while(temp != NULL){
@@ -83,15 +81,9 @@ class Solution
             temp = temp->next;
         }
         
-        // temp = head;
-        // while(temp != NULL){
-        //     cout << temp->data << " ";
-        //     temp = temp->next;
-        // }
-        // cout << endl;
         
-        // cout << carry << endl;
-        
+        // if carry is 1 after addition
+        // we add one in the last
         if(carry == 1){
             temp = head;
             while(temp->next != NULL){
@@ -100,13 +92,8 @@ class Solution
             temp->next = new Node(1);
         }
         
-        // temp = head;
-        // while(temp != NULL){
-        //     cout << temp->data << " ";
-        //     temp = temp->next;
-        // }
-        // cout << endl;
-        
+        // finally we reverse the list again
+        // after that we obtain the number after addition
         v.clear();
         temp = head;
         while(temp != NULL){
